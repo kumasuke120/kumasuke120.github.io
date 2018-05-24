@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Singleton Pattern is a common design that going to be taken whenever we want to ensure that there is solely one instance of a class. Eager InitializationThe simplest Singleton Pattern is called eager">
+<meta name="keywords" content="Java,Singleton Pattern,Double-Checked Locking">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Can you write Singleton Pattern correctly in Java?">
+<meta property="og:url" content="https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/index.html">
+<meta property="og:site_name" content="Kumasuke&#39;s Blog">
+<meta property="og:description" content="Singleton Pattern is a common design that going to be taken whenever we want to ensure that there is solely one instance of a class. Eager InitializationThe simplest Singleton Pattern is called eager">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-24T16:35:59.234Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Can you write Singleton Pattern correctly in Java?">
+<meta name="twitter:description" content="Singleton Pattern is a common design that going to be taken whenever we want to ensure that there is solely one instance of a class. Eager InitializationThe simplest Singleton Pattern is called eager">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Can you write Singleton Pattern correctly in Java?</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&text=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&is_video=false&description=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Can you write Singleton Pattern correctly in Java?&body=Check out this article: https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&name=Can you write Singleton Pattern correctly in Java?&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Eager-Initialization"><span class="toc-number">1.</span> <span class="toc-text">Eager Initialization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lazy-Initialization"><span class="toc-number">2.</span> <span class="toc-text">Lazy Initialization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Naive-Lazy-Initialization-Broken"><span class="toc-number">2.1.</span> <span class="toc-text">Naive Lazy Initialization (Broken)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lazy-Initialization-with-Lock"><span class="toc-number">2.2.</span> <span class="toc-text">Lazy Initialization with Lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Double-Checked-Locking-First-Version-Broken"><span class="toc-number">2.3.</span> <span class="toc-text">Double-Checked Locking (First Version, Broken)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-reordering"><span class="toc-number">2.3.1.</span> <span class="toc-text">What is reordering?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How-does-reordering-affect-Double-checked-Locking-idiom"><span class="toc-number">2.3.2.</span> <span class="toc-text">How does reordering affect Double-checked Locking idiom?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Is-there-any-way-to-fix-it"><span class="toc-number">2.3.3.</span> <span class="toc-text">Is there any way to fix it?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Double-Checked-Locking-Second-Version-Correct"><span class="toc-number">2.4.</span> <span class="toc-text">Double-Checked Locking (Second Version, Correct)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Double-Checked-Locking-Final-Version-Better"><span class="toc-number">2.5.</span> <span class="toc-text">Double-Checked Locking (Final Version, Better)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Eager-Vs-Lazy"><span class="toc-number">3.</span> <span class="toc-text">Eager Vs. Lazy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#See-also"><span class="toc-number">4.</span> <span class="toc-text">See also</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Can you write Singleton Pattern correctly in Java?
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Kumasuke's Blog</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-05-24T16:35:00.000Z" itemprop="datePublished">2018-05-25</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Double-Checked-Locking/">Double-Checked Locking</a>, <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/Singleton-Pattern/">Singleton Pattern</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><strong>Singleton Pattern</strong> is a common design that going to be taken whenever we want to ensure that there is solely <strong>one</strong> instance of a class.</p>
+<h2 id="Eager-Initialization"><a href="#Eager-Initialization" class="headerlink" title="Eager Initialization"></a>Eager Initialization</h2><p>The simplest Singleton Pattern is called <strong>eager initialization</strong>, which goes like this:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EagerSingleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> EagerSingleton theInstance = <span class="keyword">new</span> EagerSingleton();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">EagerSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// prevents creating by outsiders</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> EagerSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> theInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Actually, the eager version might be the best version under almost any circumstance, even if the construction of the singleton instance takes quite a few of time (, which you could trigger at startup).</p>
+<p>However, there is still some scenarios that we may need another strategy: lazy initialization.</p>
+<h2 id="Lazy-Initialization"><a href="#Lazy-Initialization" class="headerlink" title="Lazy Initialization"></a>Lazy Initialization</h2><p>The idea of <strong>lazy initialization</strong> is quite straightforward: the instance will be initialized when it gets accessed for the first time.</p>
+<h3 id="Naive-Lazy-Initialization-Broken"><a href="#Naive-Lazy-Initialization-Broken" class="headerlink" title="Naive Lazy Initialization (Broken)"></a>Naive Lazy Initialization (Broken)</h3><p>Here is a naive implementation of lazy initialization:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NaiveLazySingleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> NaiveLazySingleton theInstance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">NaiveLazySingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// prevents creating by outsiders</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> NaiveLazySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (theInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            theInstance = <span class="keyword">new</span> NaiveLazySingleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> theInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>This implementation might be useful only if your application runs in single-threaded environment. The problem is that the <strong>crippled</strong> version cannot keep the invariant of single instance in multi-threaded environment.</p>
+<h3 id="Lazy-Initialization-with-Lock"><a href="#Lazy-Initialization-with-Lock" class="headerlink" title="Lazy Initialization with Lock"></a>Lazy Initialization with <code>Lock</code></h3><p>This problem can be solved easily by the aid of lock:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySingletonWithLock</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LazySingletonWithLock theInstance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazySingletonWithLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// prevents creating by outsiders</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingletonWithLock <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (theInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                theInstance = <span class="keyword">new</span> LazySingletonWithLock();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> theInstance;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>I would prefer <code>Lock</code> under <code>java.util.concurrent</code> to the intrinsic lock of <code>Object</code>, but the intrinsic lock (by keyword <code>synchronized</code>) will do.</em></p>
+<p>This particular implementation will perform correctly under high-concurrency scenes, however the performance introduced by locking cannot be neglected.</p>
+<h3 id="Double-Checked-Locking-First-Version-Broken"><a href="#Double-Checked-Locking-First-Version-Broken" class="headerlink" title="Double-Checked Locking (First Version, Broken)"></a>Double-Checked Locking (First Version, Broken)</h3><p>Locking is a rather heavy mechanism, and a key principle to locking is to narrow down the <a href="https://en.wikipedia.org/wiki/Critical_section" target="_blank" rel="noopener">critical section</a> at best. </p>
+<p>Thus, the <strong>Double-Checked Locking</strong> idiom was proposed:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NaiveLazySingletonWithDCL</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> NaiveLazySingletonWithDCL theInstance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">NaiveLazySingletonWithDCL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// prevents creating by outsiders</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> NaiveLazySingletonWithDCL <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (theInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            lock.lock();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (theInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    theInstance = <span class="keyword">new</span> NaiveLazySingletonWithDCL();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> theInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>You may wonder what is wrong with the example as shown above at first glance. Perhaps this version  runs correctly most of time, but still it is a <strong>broken</strong> implementation because of <a href="https://www.cs.umd.edu/~pugh/java/memoryModel/jsr-133-faq.html#reordering" target="_blank" rel="noopener">reordering</a>.</p>
+<h4 id="What-is-reordering"><a href="#What-is-reordering" class="headerlink" title="What is reordering?"></a>What is reordering?</h4><p>Reordering is a common technique that could improve performance and could make good use of <a href="https://en.wikipedia.org/wiki/Instruction_cycle" target="_blank" rel="noopener">instruction cycles</a>.</p>
+<p>Let’s say, we have following statements:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 41;</span><br><span class="line">int b = 42;</span><br><span class="line">int c = a + 1;</span><br></pre></td></tr></table></figure></p>
+<p>You may think that the <strong>execution order</strong> of these three statements would be same as <strong>the order they were written</strong>, though that is not the case in fact.</p>
+<p>Due to reordering, the execution order of the snippet above could be:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int b = 42;</span><br><span class="line">int a = 41;</span><br><span class="line">int c = a + 1;</span><br></pre></td></tr></table></figure></p>
+<p>As a result, the actual execution order might be one of possible permutations of statements as long as it acts like sequential execution without changing outputs and results.</p>
+<h4 id="How-does-reordering-affect-Double-checked-Locking-idiom"><a href="#How-does-reordering-affect-Double-checked-Locking-idiom" class="headerlink" title="How does reordering affect Double-checked Locking idiom?"></a>How does reordering affect Double-checked Locking idiom?</h4><p>Actually, the creation of an instance of a class is not a atomic operation, which could be split to two steps:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NaiveLazySingleton pointer = allocateMemory(sizeof(NaiveLazySingleton));</span><br><span class="line">NaiveLazySingleton.invokeConstructor(pointer);</span><br></pre></td></tr></table></figure></p>
+<p>Therefore, with the “help” of instruction reordering, the statement <code>theInstance = new NaiveLazySingleton()</code> maybe reordered as:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NaiveLazySingleton pointer = allocateMemory(sizeof(NaiveLazySingleton));</span><br><span class="line">theInstance = pointer;</span><br><span class="line">NaiveLazySingleton.invokeConstructor(pointer);</span><br></pre></td></tr></table></figure></p>
+<p>rather than the order we might expect:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NaiveLazySingleton pointer = allocateMemory(sizeof(NaiveLazySingleton));</span><br><span class="line">NaiveLazySingleton.invokeConstructor(pointer);</span><br><span class="line">theInstance = pointer;</span><br></pre></td></tr></table></figure></p>
+<p>Under this situation, for example, if there is a thread (thread <code>A</code>) invokes the method <code>NaiveLazySingletonWithDCL.getInstance()</code> and runs at the first <code>null</code>-check, while another thread (thread <code>B</code>) runs at the point that is between line 2 and line 3 of the reordered version, the <code>null</code>-check in thread <code>A</code> will result in <code>false</code> and cause its owner method returns an <strong>incomplete instance</strong>, which may contribute to an error. </p>
+<h4 id="Is-there-any-way-to-fix-it"><a href="#Is-there-any-way-to-fix-it" class="headerlink" title="Is there any way to fix it?"></a>Is there any way to fix it?</h4><p>Before Java 1.5, there was a few workarounds to this problem (such as using <code>ThreadLocal</code>), however, these methods are mostly tricky and inefficient.</p>
+<p>As of Java 1.5, the memory model of Java has been modified and the semantics of <code>volatile</code> has been improved. With <code>volatile</code> employed, no reordering will be performed during the initialization and assignment to <code>theInstance</code>.</p>
+<h3 id="Double-Checked-Locking-Second-Version-Correct"><a href="#Double-Checked-Locking-Second-Version-Correct" class="headerlink" title="Double-Checked Locking (Second Version, Correct)"></a>Double-Checked Locking (Second Version, Correct)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySingletonWithDCL</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> LazySingletonWithDCL theInstance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazySingletonWithDCL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// prevents creating by outsiders</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingletonWithDCL <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (theInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            lock.lock();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (theInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    theInstance = <span class="keyword">new</span> LazySingletonWithDCL();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> theInstance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This is a correct version of lazy initialization, further more, could it be better?</p>
+<h3 id="Double-Checked-Locking-Final-Version-Better"><a href="#Double-Checked-Locking-Final-Version-Better" class="headerlink" title="Double-Checked Locking (Final Version, Better)"></a>Double-Checked Locking (Final Version, Better)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySingletonWithDCL</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> LazySingletonWithDCL theInstance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazySingletonWithDCL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// prevents creating by outsiders</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingletonWithDCL <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        LazySingletonWithDCL t;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((t = theInstance) == <span class="keyword">null</span>) &#123;</span><br><span class="line">            lock.lock();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> ((t = theInstance) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    t = <span class="keyword">new</span> LazySingletonWithDCL();</span><br><span class="line">                    theInstance = t;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This version introduced a local variable <code>t</code> to reduce the number of reading static field <code>theInstance</code>. This simple change may improve performance by 25 percent according to <a href="https://www.amazon.com/gp/product/0321356683" target="_blank" rel="noopener">Joshua Bloch’s Effective Java, Second Edition</a>.</p>
+<h2 id="Eager-Vs-Lazy"><a href="#Eager-Vs-Lazy" class="headerlink" title="Eager Vs. Lazy"></a>Eager Vs. Lazy</h2><p>Now that you could write singleton pattern in Java correctly, whether in eager or lazy form, it’s the time to decide which form’s best.</p>
+<p>The Simplest is the best, under any circumstance, you should consider eager initialization at first. While lazy initialization may save a lot of memory footprint and initialization time at startup, it increases the time of <code>getInstance</code> most of time at a cost. </p>
+<p>If you really need the characteristics provided by lazy initialization, you should always taken the final version of double-checked locking idiom into consideration. Not only because of its correctness, but also it is a well-received version towards this form of singleton pattern.</p>
+<h2 id="See-also"><a href="#See-also" class="headerlink" title="See also"></a>See also</h2><ol>
+<li><a href="https://en.wikipedia.org/wiki/Singleton_pattern" target="_blank" rel="noopener">Singleton Pattern</a></li>
+<li><a href="https://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html" target="_blank" rel="noopener">The “Double-Checked Locking is Broken” Declaration</a></li>
+<li><a href="https://www.cs.umd.edu/~pugh/java/memoryModel/" target="_blank" rel="noopener">The Java Memory Model</a></li>
+</ol>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Eager-Initialization"><span class="toc-number">1.</span> <span class="toc-text">Eager Initialization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lazy-Initialization"><span class="toc-number">2.</span> <span class="toc-text">Lazy Initialization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Naive-Lazy-Initialization-Broken"><span class="toc-number">2.1.</span> <span class="toc-text">Naive Lazy Initialization (Broken)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lazy-Initialization-with-Lock"><span class="toc-number">2.2.</span> <span class="toc-text">Lazy Initialization with Lock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Double-Checked-Locking-First-Version-Broken"><span class="toc-number">2.3.</span> <span class="toc-text">Double-Checked Locking (First Version, Broken)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-reordering"><span class="toc-number">2.3.1.</span> <span class="toc-text">What is reordering?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How-does-reordering-affect-Double-checked-Locking-idiom"><span class="toc-number">2.3.2.</span> <span class="toc-text">How does reordering affect Double-checked Locking idiom?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Is-there-any-way-to-fix-it"><span class="toc-number">2.3.3.</span> <span class="toc-text">Is there any way to fix it?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Double-Checked-Locking-Second-Version-Correct"><span class="toc-number">2.4.</span> <span class="toc-text">Double-Checked Locking (Second Version, Correct)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Double-Checked-Locking-Final-Version-Better"><span class="toc-number">2.5.</span> <span class="toc-text">Double-Checked Locking (Final Version, Better)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Eager-Vs-Lazy"><span class="toc-number">3.</span> <span class="toc-text">Eager Vs. Lazy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#See-also"><span class="toc-number">4.</span> <span class="toc-text">See also</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&text=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&is_video=false&description=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Can you write Singleton Pattern correctly in Java?&body=Check out this article: https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&title=Can you write Singleton Pattern correctly in Java?"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.kumasuke.app/2018/05/25/can-you-write-singleton-pattern-correctly-in-java/&name=Can you write Singleton Pattern correctly in Java?&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Kumasuke
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'kumasuke-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
