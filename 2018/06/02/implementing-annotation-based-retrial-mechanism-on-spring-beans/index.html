@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://blog.kumasuke.app/img/2018/06/test-say-hello.png">
 <meta property="og:image" content="https://blog.kumasuke.app/img/2018/06/test-say-hello-from-foreigners.png">
 <meta property="og:image" content="https://i.creativecommons.org/l/by-sa/4.0/88x31.png">
-<meta property="og:updated_time" content="2018-07-23T13:43:15.266Z">
+<meta property="og:updated_time" content="2018-10-23T13:36:06.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Implementing annotation-based retrial mechanism on Spring Beans">
 <meta name="twitter:description" content="Disclaimer: Although this article is original, the annotation @RetryOnFailure mentioned within this article was inspired by @RetryOnFailure in jcabi-aspects.  In Spring Framework, we may often come a">
@@ -210,7 +210,7 @@
 <h2 id="Possible-Improvements"><a href="#Possible-Improvements" class="headerlink" title="Possible Improvements"></a>Possible Improvements</h2><p>Actually, the mechanism we have implemented is only support non-static <code>public</code> methods. This is not only because we use <code>Class#getMethods()</code> to detected methods, but also the JDK dynamic proxy only support on interfaces tier.<br>On the other hand, if we use CGLib to enhance our Beans in all circumstances, we may solve former-mentioned problem but could not support <code>final</code> class in the case of interface-based Bean.<br>After all, which way you take is just at your disposal.</p>
 <p>Still, both JDK dynamic proxy and CGLib will hide annotations (not <code>@RetryOnFailure</code>) on fields, methods and etc., it may affects other mechanisms to work properly. You should always keep this in mind.</p>
 <h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>In this article, we implemented annotation-based retrial mechanism on Spring. This may inspire you in other ways. You could use this technique to implement other useful mechanism or even improve the architecture of your application.</p>
-<h2 id="Source-code"><a href="#Source-code" class="headerlink" title="Source code"></a>Source code</h2><p>You could get the code of the sample project at <a href="https://github.com/kumasuke120/retry-on-failure" target="_blank" rel="noopener">here</a>.</p>
+<h2 id="Source-code"><a href="#Source-code" class="headerlink" title="Source code"></a>Source code</h2><p>You could get the code of the sample project at <a href="https://github.com/kumasuke120/blog-projects/tree/master/retry-on-failure" target="_blank" rel="noopener">here</a>.</p>
 <hr style="margin-bottom: 20px; margin-top: 35px"> <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"><br> <b style="color: #2bbc8a">This original article is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/"> Creative Commons Attribution 4.0 International License</a>.</b><br><br> <b style="color: #2bbc8a">Title: </b>Implementing annotation-based retrial mechanism on Spring Beans<br> <b style="color: #2bbc8a">Permalink: </b><a href="https://blog.kumasuke.app/2018/06/02/implementing-annotation-based-retrial-mechanism-on-spring-beans/" target="_blank">https://blog.kumasuke.app/2018/06/02/implementing-annotation-based-retrial-mechanism-on-spring-beans/</a>
   </div>
 </article>
