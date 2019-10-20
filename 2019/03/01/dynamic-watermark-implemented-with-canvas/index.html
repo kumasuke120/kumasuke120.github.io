@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Sometimes we need watermark that is generated dynamically or programatically. Our first thought may be we could choose to generate it by the backend. However, we could implement it with canvas in HTML">
+<meta name="keywords" content="HTML,Javascript,canvas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dynamic watermark implemented with canvas">
+<meta property="og:url" content="https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/index.html">
+<meta property="og:site_name" content="Kumasuke&#39;s Blog">
+<meta property="og:description" content="Sometimes we need watermark that is generated dynamically or programatically. Our first thought may be we could choose to generate it by the backend. However, we could implement it with canvas in HTML">
+<meta property="og:locale" content="en-US">
+<meta property="og:image" content="https://blog.kumasuke.app/img/2019/03/watermark-looking.png">
+<meta property="og:image" content="https://i.creativecommons.org/l/by-sa/4.0/88x31.png">
+<meta property="og:updated_time" content="2019-07-14T08:18:28.135Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dynamic watermark implemented with canvas">
+<meta name="twitter:description" content="Sometimes we need watermark that is generated dynamically or programatically. Our first thought may be we could choose to generate it by the backend. However, we could implement it with canvas in HTML">
+<meta name="twitter:image" content="https://blog.kumasuke.app/img/2019/03/watermark-looking.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Dynamic watermark implemented with canvas</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/06/16/customized-thread-pool-executor-with-prioirity/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/10/21/build-an-nio-http-server-6-wrap-things-up/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&text=Dynamic watermark implemented with canvas"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&is_video=false&description=Dynamic watermark implemented with canvas"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Dynamic watermark implemented with canvas&body=Check out this article: https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&name=Dynamic watermark implemented with canvas&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Thought"><span class="toc-number">1.</span> <span class="toc-text">Thought</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Draw"><span class="toc-number">2.</span> <span class="toc-text">Draw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Convert"><span class="toc-number">3.</span> <span class="toc-text">Convert</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-background"><span class="toc-number">4.</span> <span class="toc-text">Set background</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-number">5.</span> <span class="toc-text">Summary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Source-code"><span class="toc-number">6.</span> <span class="toc-text">Source code</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Dynamic watermark implemented with canvas
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Kumasuke's Blog</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-03-01T12:19:49.000Z" itemprop="datePublished">2019-03-01</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/HTML/">HTML</a>, <a class="tag-link" href="/tags/Javascript/">Javascript</a>, <a class="tag-link" href="/tags/canvas/">canvas</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Sometimes we need watermark that is generated dynamically or programatically. Our first thought may be we could choose to generate it by the backend. However, we could implement it with <code>canvas</code> in HTML5.</p>
+<h2 id="Thought"><a href="#Thought" class="headerlink" title="Thought"></a>Thought</h2><p>To generate a watermark, we need to perform the following steps:</p>
+<ol>
+<li>Draw text on the canvas and set it to the style we desire</li>
+<li>Convert the content of the canvas to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs" target="_blank" rel="noopener">data url</a></li>
+<li>Set the background image of the element you want to the data url that was generated in the previous step</li>
+</ol>
+<p>This sounds quite simple, let it do it in practice.</p>
+<h2 id="Draw"><a href="#Draw" class="headerlink" title="Draw"></a>Draw</h2><p>Firstly, to draw, we need create a temporary canvas:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createTemporaryCanvas</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line">    canvas.style.display = <span class="string">'none'</span>;</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(canvas);</span><br><span class="line">    <span class="keyword">return</span> canvas;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Then we draw the image or text we want:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawWatermark</span>(<span class="params">canvas, content</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> FONT_SIZE = <span class="number">20</span>;</span><br><span class="line">    ctx.font = FONT_SIZE + <span class="string">'px Arial, sans-serif'</span>;</span><br><span class="line">    ctx.fillStyle = <span class="string">'grey'</span>;</span><br><span class="line">    ctx.textAlign = <span class="string">'center'</span>;</span><br><span class="line">    ctx.textBaseline = <span class="string">'bottom'</span>;</span><br><span class="line">    ctx.save();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> FORTY_FIVE_DEGREE_RAD = <span class="number">45</span> * <span class="built_in">Math</span>.PI / <span class="number">180</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> measure = ctx.measureText(content);</span><br><span class="line">    <span class="keyword">let</span> x = FONT_SIZE / <span class="number">2</span> + measure.width;</span><br><span class="line">    <span class="keyword">let</span> y = measure.width / <span class="number">2</span>;</span><br><span class="line">    ctx.translate(x, y);</span><br><span class="line">    ctx.rotate(-FORTY_FIVE_DEGREE_RAD);</span><br><span class="line"></span><br><span class="line">    ctx.fillText(content, <span class="number">0</span>, FONT_SIZE / <span class="number">2</span>);</span><br><span class="line">    ctx.restore();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Convert"><a href="#Convert" class="headerlink" title="Convert"></a>Convert</h2><p>Next, we will convert the <code>canvas</code> and its content to a data url. Luckily, we have a method called <code>toDataURL</code> on the <code>HTMLCanvasElement</code>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dataUrl = canvas.toDataURL();</span><br></pre></td></tr></table></figure></p>
+<p>At last, we have already gotten the desired data url and can finally remove the temporary canvas:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeTemporaryCanvas</span>(<span class="params">canvas</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.body.removeChild(canvas);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>For your information, here is the full snippet of get the data url we want:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWatermarkImage</span>(<span class="params">content</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> canvas = createTemporaryCanvas();</span><br><span class="line">    drawWatermark(canvas, content);</span><br><span class="line">    <span class="keyword">let</span> dataUrl = canvas.toDataURL();</span><br><span class="line">    removeTemporaryCanvas(canvas);</span><br><span class="line">    <span class="keyword">return</span> dataUrl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Set-background"><a href="#Set-background" class="headerlink" title="Set background"></a>Set background</h2><p>Finally, let us set the background to the data url we got via dom:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">applyWaterMark</span>(<span class="params">content</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> backgroundImage = getWatermarkImage(content);</span><br><span class="line">    <span class="built_in">document</span>.body.style.backgroundImage = <span class="string">`url('<span class="subst">$&#123;backgroundImage&#125;</span>')`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>At this moment, we have finished the coding. Let us take a look at the actual looking of watermark.</p>
+<p><img src="/img/2019/03/watermark-looking.png" alt="Watermark looking"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>In this article, we have learnt an easy way to implement watermark. Here we merely showed the idea of drawing, you could make your own variation based on this code snippet.</p>
+<h2 id="Source-code"><a href="#Source-code" class="headerlink" title="Source code"></a>Source code</h2><p>You could get the code of the sample project at <a href="https://github.com/kumasuke120/blog-projects/tree/master/dynamic-watermark" target="_blank" rel="noopener">here</a>.</p>
+<hr style="margin-bottom: 20px; margin-top: 35px"> <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"><br> <b style="color: #2bbc8a">This original article is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/"> Creative Commons Attribution 4.0 International License</a>.</b><br><br> <b style="color: #2bbc8a">Title: </b>Dynamic watermark implemented with canvas<br> <b style="color: #2bbc8a">Permalink: </b><a href="https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/" target="_blank">https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/</a>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Thought"><span class="toc-number">1.</span> <span class="toc-text">Thought</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Draw"><span class="toc-number">2.</span> <span class="toc-text">Draw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Convert"><span class="toc-number">3.</span> <span class="toc-text">Convert</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-background"><span class="toc-number">4.</span> <span class="toc-text">Set background</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-number">5.</span> <span class="toc-text">Summary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Source-code"><span class="toc-number">6.</span> <span class="toc-text">Source code</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&text=Dynamic watermark implemented with canvas"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&is_video=false&description=Dynamic watermark implemented with canvas"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Dynamic watermark implemented with canvas&body=Check out this article: https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&title=Dynamic watermark implemented with canvas"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.kumasuke.app/2019/03/01/dynamic-watermark-implemented-with-canvas/&name=Dynamic watermark implemented with canvas&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Kumasuke
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'kumasuke-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
