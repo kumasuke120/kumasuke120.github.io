@@ -1,0 +1,108 @@
+<!--
+  HTML for Mosaic Grids
+
+  author:           Kumasuke (bearcomingx@gmail.com)
+  compatibility:    Chrome 45+, Edge 13+, Firefox 45+
+  date:             01/29/2016
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Mosaic Grids</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Mosaic Grids</h1>
+  </header>
+
+  <main>
+    <!-- grids canvas -->
+    <div id="canvas"></div>
+    <!-- canvas controls -->
+    <div id="controls">
+      <button id="reload-canvas" type="button">R
+        <div class="tooltip">Reload Canvas</div>
+      </button>
+      <button id="use-default" type="button">D
+        <div class="tooltip">Use Default</div>
+      </button>
+      <button id="invert-all" type="button">I
+        <div class="tooltip">Invert All</div>
+      </button>
+      <button id="all-foreground" type="button">F
+        <div class="tooltip">All Foreground</div>
+      </button>
+      <button id="all-background" type="button">B
+        <div class="tooltip">All Background</div>
+      </button>
+    </div>
+    <!-- grids config -->
+    <div id="config">
+      <form>
+        <fieldset>
+          <legend>Configuration</legend>
+          <div class="control-group">
+            <label for="count">Numbers of grids per row / column</label>
+            <input id="count" name="count" type="number">
+          </div>
+          <div class="control-group">
+            <label for="size">Width and Height of each grid</label>
+            <input id="size" name="size" type="number" min="10" max="150">
+            <span class="unit">px</span>
+          </div>
+          <div class="control-group">
+            <label for="fore-color">Foreground Color</label>
+            <input id="fore-color" name="fore-color" type="color">
+          </div>
+          <div class="control-group">
+            <label for="back-color">Background Color</label>
+            <input id="back-color" name="back-color" type="color">
+          </div>
+          <div class="control-group">
+            <label for="inverse">Invert Foreground and Background Colors of grids</label>
+            <input id="inverse" name="inverse" type="checkbox">
+            <label for="inverse" class="fake-checkbox"><span></span></label>
+          </div>
+        </fieldset>
+        <div class="button-group">
+          <button id="share" type="button">Share</button>
+          <button id="generate" type="submit">Generate!</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2016 Kumasuke</p>
+  </footer>
+
+  <!-- share dialog -->
+  <div id="share-dialog" class="dialog">
+    <div class="dialog-header">
+      <button type="button" class="close">&times;</button>
+      <h4>Share My Creation!</h4>
+    </div>
+    <div class="dialog-content">
+      <p>Here is a link to the current configuration (including the pattern of grids),
+        which you could share with your friends or keep for yourself.</p>
+      <input id="config-url" type="text" readonly>
+    </div>
+    <div class="dialog-footer">
+      <span class="message"></span>
+      <button type="button">Copy</button>
+      <button type="button">Close</button>
+    </div>
+  </div>
+
+  <script type="application/javascript" src="script.js"></script>
+</body>
+
+</html>

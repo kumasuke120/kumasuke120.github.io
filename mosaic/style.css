@@ -1,0 +1,322 @@
+/*
+* CSS for Mosaic Grids
+*
+* author:           Kumasuke (bearcomingx@gmail.com)
+* compatibility:    Chrome 45+, Edge 13+, Firefox 45+
+* date:             01/29/2016
+*/
+
+/* common */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+#count,
+.dialog,
+#canvas,
+form fieldset,
+#controls button,
+form .fake-checkbox,
+form input[type='color'],
+.dialog .dialog-footer button,
+.dialog .dialog-content input,
+.dialog .dialog-header .close {
+    /* due to default browsers' settings, border-color will
+       be same as color */
+    border: 1px solid;
+}
+
+header h1,
+form .unit,
+#canvas span,
+form .fake-checkbox,
+form .fake-checkbox span {
+    display: inline-block;
+}
+
+.dialog,
+.tooltip,
+form input[type='checkbox'],
+.dialog .dialog-footer .message {
+    display: none;
+}
+
+header h1,
+#canvas span,
+form .button-group button {
+    cursor: pointer;
+}
+
+.error,
+#canvas,
+#config {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form input,
+form .unit,
+.dialog .dialog-header .close {
+    font-family: monospace;
+}
+
+form input,
+form fieldset,
+.dialog .dialog-footer {
+    text-align: right;
+}
+
+#controls,
+form .unit,
+form .button-group {
+    text-align: center;
+}
+
+header,
+footer {
+    flex-shrink: 0;
+}
+
+/* overall */
+header {
+    padding: 22px 8% 10px;
+    margin-bottom: 20px;
+}
+
+main {
+    flex-grow: 1;
+    padding-bottom: 30px;
+}
+
+footer {
+    padding: 0 8% 6px;
+}
+
+/* canvas */
+#canvas div {
+    line-height: 0;
+}
+
+/* controls */
+#controls {
+    margin-top: 6px;
+    margin-bottom: -3px;
+}
+
+#controls button {
+    vertical-align: middle;
+    font-weight: bold;
+    width: 24px;
+    height: 22px;
+    position: relative;
+}
+
+#controls button:hover .tooltip {
+    /* comes after display: none, and will overwrite
+       the former one, needn't to be !important */
+    display: block;
+}
+
+.tooltip {
+    width: 120px;
+    text-align: center;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+}
+
+/* config */
+#config {
+    width: 60%;
+    min-width: 456px;
+}
+
+form fieldset {
+    margin-bottom: 10px;
+}
+
+form fieldset legend {
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#count {
+    width: 70px;
+}
+
+#size {
+    width: 51px;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+}
+
+form input {
+    height: 20px;
+}
+
+form .fake-checkbox {
+    width: 18px;
+    height: 18px;
+}
+
+form .fake-checkbox span {
+    width: 12px;
+    height: 12px;
+    margin: 3px;
+}
+
+form .unit {
+    box-sizing: border-box;
+    width: 20px;
+    height: 24px;
+    margin-left: -4px;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+}
+
+form .control-group label:not(.fake-checkbox) {
+    float: left;
+}
+
+form .control-group:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+
+form .button-group button {
+    font-size: 18px;
+    padding: 5px 25px 5px;
+    border: 0;
+}
+
+form .button-group button[type='submit'] {
+    font-weight: bold;
+}
+
+/* error */
+.error a:link,
+.error a:visited {
+    text-decoration: none;
+    color: #ff0000;
+}
+
+.error a:hover {
+    text-decoration: underline;
+}
+
+.error a:active {
+    text-decoration: none;
+}
+
+/* dialog */
+.dialog {
+    width: 500px;
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    margin-left: -250px;
+    z-index: 1;
+}
+
+.dialog .dialog-header {
+    border-bottom: 1px solid;
+    padding: 4px 5px;
+}
+
+.dialog .dialog-header .close {
+    float: right;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+}
+
+.dialog .dialog-header h4 {
+    margin: 0;
+}
+
+.dialog .dialog-content {
+    padding: 0 15px 10px;
+}
+
+.dialog .dialog-content p {
+    margin: 5px 0;
+}
+
+.dialog .dialog-content input {
+    width: 100%;
+    height: 20px;
+}
+
+.dialog .dialog-footer {
+    border-top: 1px solid;
+    padding: 6px 10px;
+}
+
+.dialog .dialog-footer .message {
+    margin-right: 10px;
+}
+
+.dialog .dialog-footer button {
+    width: 70px;
+    height: 22px;
+}
+
+/* browser compatibility */
+/* microsoft edge */
+@supports (-ms-accelerator:true) {
+    form input[type='color'] {
+        width: 70px;
+    }
+}
+
+/* google chrome */
+@supports (-webkit-appearance:none) and (not (-ms-accelerator:true)) {
+    form input[type='color'] {
+        width: 66px;
+    }
+
+    input:focus,
+    button:focus {
+        outline: none;
+    }
+}
+
+/* mozilla firefox */
+@-moz-document url-prefix() {
+    form input[type='color'] {
+        width: 74px;
+    }
+
+    button::-moz-focus-inner {
+        border: 0;
+    }
+
+    #size {
+        border-color: -moz-use-text-color;
+    }
+}
